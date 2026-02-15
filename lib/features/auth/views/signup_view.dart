@@ -2,22 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:hungry_app/core/constants/app_colors.dart';
+import 'package:hungry_app/features/auth/data/auth_repo.dart';
 import 'package:hungry_app/features/auth/views/login_view.dart';
 import 'package:hungry_app/features/auth/widgets/custom_btn.dart';
+import 'package:hungry_app/root.dart';
 
+import '../../../core/network/api_error.dart';
+import '../../../shared/custom_snack_bar.dart';
 import '../../../shared/custom_text.dart';
 import '../../../shared/custom_textField.dart';
 
-class SignupView extends StatelessWidget {
+class SignupView extends StatefulWidget {
   const SignupView({super.key});
 
   @override
+  State<SignupView> createState() => _SignupViewState();
+}
+
+class _SignupViewState extends State<SignupView> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController confirmController = TextEditingController();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  AuthRepo authRepo=AuthRepo();
+  bool isLoading = false;
+
+  Future<void> signUp () async {
+    if(formKey.currentState!.validate()) {
+      try {
+        setState(() => isLoading = true);
+        final user = await authRepo.signup(nameController.text.trim(), emailController.text.trim(), passController.text.trim());
+        if(user != null) {
+          Navigator.push(context, MaterialPageRoute(builder: (c) => Root()));
+        }
+        setState(() => isLoading = false);
+
+      } catch (e) {
+        setState(() => isLoading = false);
+        String errMsg = 'Error in Register';
+        if(e is ApiError) {
+          errMsg = e.message;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(customSnack(errMsg));
+      }
+    }
+  }
+  @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController nameController = TextEditingController();
-    TextEditingController passController = TextEditingController();
-    TextEditingController confirmController = TextEditingController();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+
+
     return Scaffold(
       body: Form(
         key: formKey,
@@ -62,14 +97,11 @@ class SignupView extends StatelessWidget {
                         controller: passController,
                       ),
                       Gap(20),
-                      CustomAuthBtn(
+                      isLoading?CircularProgressIndicator(color: Colors.white,):CustomAuthBtn(
                         color: AppColors.primary,
                         textColor: Colors.white,
                         text: "Sign Up",
-                        onTap: () {
-                          if (formKey.currentState!.validate())
-                            print("success register");
-                        },
+                        onTap:signUp
                       ),
                       Gap(10),
                       CustomAuthBtn(

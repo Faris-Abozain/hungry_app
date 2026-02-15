@@ -7,7 +7,7 @@ import 'package:hungry_app/features/home/views/home_view.dart';
 import 'package:hungry_app/features/orderHistory/views/order_history_view.dart';
 
 class Root extends StatefulWidget {
- const Root({super.key});
+  const Root({super.key});
 
   @override
   State<Root> createState() => _RootState();
@@ -27,7 +27,12 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(controller: controller,physics: NeverScrollableScrollPhysics(), children: screens,),
+      body: IndexedStack(
+        // controller: controller,
+        // physics: NeverScrollableScrollPhysics(),
+        index: currentScreen,
+        children: screens,
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: AppColors.primary,

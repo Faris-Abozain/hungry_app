@@ -6,9 +6,11 @@ import 'package:hungry_app/features/checkout/widgets/order_details_widget.dart';
 import 'package:hungry_app/shared/custom_text.dart';
 
 import '../../../shared/custom_button.dart';
+import '../../auth/data/auth_model.dart';
 
 class CheckoutView extends StatefulWidget {
-  const CheckoutView({super.key});
+  const CheckoutView({super.key,required this.totalPrice});
+  final String totalPrice;
 
   @override
   State<CheckoutView> createState() => _CheckoutViewState();
@@ -16,6 +18,8 @@ class CheckoutView extends StatefulWidget {
 
 class _CheckoutViewState extends State<CheckoutView> {
   String selectedMethod = 'cash';
+  UserModel? userModel;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +47,10 @@ class _CheckoutViewState extends State<CheckoutView> {
               ),
               Gap(10),
               OrderDetailsWidget(
-                order: '18.25',
-                taxes: '3.5',
-                fees: '2.4',
-                total: '100.0',
+                order: widget.totalPrice??'18.25',
+                taxes: '3.50',
+                fees: '40.33',
+                total: (double.parse(widget.totalPrice)+3.50+40.33).toStringAsFixed(2),
               ),
               Gap(80),
               CustomText(
@@ -103,7 +107,7 @@ class _CheckoutViewState extends State<CheckoutView> {
                 leading: Image.asset('assets/icon/profileVisa.png', width: 50),
                 title: CustomText(text: 'Debit card', color: Colors.white),
                 subtitle: CustomText(
-                  text: '**** ***** 2342',
+                  text: userModel?.visa??'**** **** **** 2343',
                   color: Colors.white,
                 ),
                 trailing: Radio<String>(
@@ -155,8 +159,8 @@ class _CheckoutViewState extends State<CheckoutView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CustomText(text: 'Total Price', size: 16),
-                  CustomText(text: '\$ 18.9', size: 24),
-                ],
+                  CustomText(text: '\$ ${(double.parse(widget.totalPrice)+3.50+40.33).toStringAsFixed(2)}', size: 20),
+                          ],
               ),
               CustomButton(
                 text: 'Pay Now',

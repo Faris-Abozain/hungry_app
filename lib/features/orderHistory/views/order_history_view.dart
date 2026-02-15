@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:hungry_app/shared/custom_button.dart';
+import '../../../shared/custom_button.dart';
 import '../../../shared/custom_text.dart';
 
 class OrderHistoryView extends StatelessWidget {
