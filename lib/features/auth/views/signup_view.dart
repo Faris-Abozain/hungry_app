@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -75,7 +76,7 @@ class _SignupViewState extends State<SignupView> {
                     topLeft: Radius.circular(30),
                   ),
                 ),
-                child: SingleChildScrollView(
+                child:  SingleChildScrollView(
                   child: Column(
                     children: [
                       Gap(30),
@@ -97,7 +98,7 @@ class _SignupViewState extends State<SignupView> {
                         controller: passController,
                       ),
                       Gap(20),
-                      isLoading?CircularProgressIndicator(color: Colors.white,):CustomAuthBtn(
+                      isLoading?CupertinoActivityIndicator(color: Colors.white,):CustomAuthBtn(
                         color: AppColors.primary,
                         textColor: Colors.white,
                         text: "Sign Up",

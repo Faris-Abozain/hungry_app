@@ -10,7 +10,6 @@ import 'package:hungry_app/features/auth/widgets/custom_btn.dart';
 import 'package:hungry_app/root.dart';
 import 'package:hungry_app/shared/custom_text.dart';
 import 'package:hungry_app/shared/custom_textField.dart';
-
 import '../../../shared/custom_snack_bar.dart';
 
 class LoginView extends StatefulWidget {
@@ -21,8 +20,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController emailController = TextEditingController(text: "faris@gmail.com");
-  TextEditingController passController = TextEditingController(text: "12345678");
+  TextEditingController emailController = TextEditingController(text: "faris1@gmail.com");
+  TextEditingController passController = TextEditingController(text: "faris123");
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool isLoading = false;
 

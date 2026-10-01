@@ -110,6 +110,10 @@ class _HomeViewState extends State<HomeView> {
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.75,
+                  ),
                   delegate: SliverChildBuilderDelegate(
                     childCount: products!.length,
                     (context, index) {
@@ -137,10 +141,7 @@ class _HomeViewState extends State<HomeView> {
                       );
                     },
                   ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.75,
-                  ),
+
                 ),
               ),
             ],
